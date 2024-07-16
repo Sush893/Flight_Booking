@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Booking System</title>
+    <style>
+        @font-face {
+            font-family: 'Forte';
+            src: url('FORTE.TTF') format('truetype'); /* Make sure to have the font file in the correct directory */
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #000000;
+            color: white;
+            padding: 0.7em; /* Adjusted padding */
+            text-align: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .left-header {
+            display: flex;
+            align-items: center;
+        }
+        .right-header {
+            display: flex;
+            align-items: center;
+        }
+        header img {
+            height: 40px; /* Reduced the height of the image */
+            margin-right: 0.5em; /* Add some space between the images and text */
+        }
+        .right-header img {
+            margin-left: 0.5em; /* Add space between the right header images */
+        }
+        header h1 {
+            font-family: 'Forte', cursive;
+            font-size: 2em; /* Reduced font size */
+            margin: 0;
+        }
+        .blank-banner {
+            height: 50px; /* Adjust height of the blank banner */
+            background-color: #fff; /* White background */
+        }
+        .header-banner {
+            position: relative; /* Position relative for absolute positioning inside */
+            width: 100%; /* Set width of banner */
+            max-width: 100%; /* Limit maximum width */
+            height: 300px; /* Set height of banner */
+            overflow: visible; /* Allow overflow to ensure box can extend beyond banner */
+        }
+        .header-banner img {
+            width: 100%; /* Ensure the image fills the width of the banner */
+            height: 100%; /* Ensure the image covers the entire height of the banner */
+            object-fit: cover; /* Maintain aspect ratio and cover entire space */
+            position: absolute; /* Position absolutely inside the banner */
+            top: 0; /* Position at the top */
+            left: 0; /* Position at the left */
+        }
+        .button-container {
+            position: absolute; /* Position absolutely inside the banner */
+            top: 25%; /* Position vertically centered */
+            left: 40%; /* Shift buttons towards the left */
+            transform: translate(-50%, -50%); /* Adjust center alignment */
+            display: flex;
+            justify-content: space-around; /* Adjusted spacing between buttons */
+            align-items: center; /* Center align vertically */
+            z-index: 1; /* Ensure buttons appear above the image */
+        }
+        .button {
+            background-color: #FFA500; /* Orange */
+            border: none;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 18px; /* Increased font size */
+            padding: 12px 24px; /* Increased padding */
+            margin: 0 8px; /* Reduced spacing between buttons */
+            cursor: pointer;
+            border-radius: 10px; /* Reduced border radius */
+            transition: background-color 0.3s ease; /* Smooth transition */
+            position: relative;
+        }
+        .button:first-child {
+            background-color: white; /* White for the first button */
+            color: #000000; /* Black text */
+        }
+        .button:hover {
+            background-color: #FFF; /* Lighter background on hover */
+            color: #000000; /* Black text on hover */
+        }
+        .rectangular-box {
+            position: absolute;
+            top: 100%; /* Position the box right below the button */
+            left: 0; /* Align the box with the left side of the button */
+            background-color: #fbfdfe; /* Light color */
+            color: rgb(223, 113, 23);
+            padding: 20px; /* Increased padding for larger size */
+            width: 800px; /* Increased width */
+            height: 250px; /* Increased height */
+            border-radius: 8px;
+            z-index: 2; /* Ensure box is above the image */
+            white-space: nowrap; /* Prevent text from wrapping */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Add shadow */
+        }
+        .radio-buttons {
+            margin-top: 20px; /* Space above radio buttons */
+        }
+        .radio-buttons input[type="radio"] {
+            appearance: none; /* Remove default radio button appearance */
+            width: 16px;
+            height: 16px;
+            border: 2px solid #FFA500; /* Orange border */
+            border-radius: 50%;
+            outline: none;
+            cursor: pointer;
+            margin-right: 10px; /* Space between radio button and label */
+            vertical-align: middle;
+        }
+        .radio-buttons input[type="radio"]:checked {
+            background-color: #FFA500; /* Orange background when checked */
+        }
+        .radio-buttons label {
+            margin-right: 20px; /* Space between labels */
+            vertical-align: middle;
+            color: #000; /* Black text color */
+        }
+        .small-boxes {
+            margin-top: 20px; /* Space above small boxes */
+            display: flex;
+            justify-content: flex-start; /* Align boxes to the left */
+        }
+        .small-box {
+            background-color: #fcfbf8; /* Orange background */
+            width: 200px; /* Fixed width */
+            height: 50px; /* Fixed height */
+            border-radius: 8px; /* Border radius */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            color: rgb(13, 12, 12); /* Black text color */
+            font-size: 11px; /* Adjusted font size */
+            font-weight: bold; /* Bold text */
+            margin-right: 5px; /* Reduced space between boxes */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Gaussian blur shadow */
+            padding: 10px; /* Adjusted padding */
+            text-align: left; /* Align text to the left */
+        }
+        .small-box p:first-child {
+            font-size: 11px; /* Larger font size for the first paragraph */
+            margin-bottom: 1px; /* Space below the first paragraph */
+        }
+        .additional-button {
+            margin-top: 20px; /* Space above the additional button */
+            text-align: center; /* Center align text */
+        }
+        .additional-button button {
+            background: linear-gradient(135deg, #FFA500, #FFFF00); /* Orange to Yellow gradient */
+            border: none;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 18px; /* Increased font size */
+            padding: 12px 24px; /* Increased padding */
+            margin: 0 8px; /* Reduced spacing between buttons */
+            cursor: pointer;
+            border-radius: 10px; /* Rounded border */
+            transition: background-color 0.3s ease; /* Smooth transition */
+        }
+        .additional-button button:hover {
+            background: linear-gradient(135deg, #FF8C00, #FFD700); /* Darker Orange to Gold gradient on hover */
+        }
+        .four-boxes {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 170px; /* Space above the four boxes */
+        }
+        .box {
+            background-color: #f0f0f0;
+            width: 250px;
+            height: 310px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            overflow: hidden; /* Ensure overflow is hidden */
+            position: relative; /* Position relative for text positioning */
+        }
+        .box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensure the image covers the entire box */
+            border-radius: 8px; /* Rounded corners */
+        }
+        .box .box-text {
+            position: absolute; /* Position the text absolutely */
+            bottom: 0; /* Align text to the bottom */
+            left: 0; /* Align text to the left */
+            width: 100%; /* Full width */
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+            color: white; /* White text color */
+            padding: 10px; /* Padding around text */
+            box-sizing: border-box; /* Include padding in width calculation */
+            text-align: center; /* Center align text */
+        }
+        .box p {
+            margin: 0; /* Remove default margin */
+            font-size: 18px; /* Font size for text */
+        }
+        .text-div {
+            background-color: #FFF;
+            font-family: 'Forte', cursive;
+            text-align: center;
+            padding: 50px;
+            margin-top: 50px;
+            font-size: 24px;
+            color: #d46b0a;
+        }
+
+        .orange-banner {
+            background-color: #FFA500;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px; /* Adjust margin as needed */
+        }
+
+        .orange-banner p {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="left-header">
+        <img src="pngtree-luggage-icon-vector-png-png-image_6111358.png" alt="Logo">
+        <h1>Bon Voyage</h1>
+    </div>
+    <div class="right-header">
+        <img src="icone-d-information-orange.png" alt="Icon 1">
+        <img src="4548400.png" alt="Icon 2">
+        <img src="icone-du-calendrier-des-evenements-orange.png" alt="Icon 3">
+    </div>
+</header>
+
+<!-- Blank banner -->
+<div class="blank-banner"></div>
+
+<header class="header-banner">
+    <img src="3604547.jpg" alt="Main Image">
+    <div class="button-container">
+        <div style="position: relative;">
+            <button class="button">Flights</button>
+            <div class="rectangular-box">
+                Hi! Where would you like to go? 
+                <div class="radio-buttons">
+                    <label><input type="radio" name="destination" value="beach"> Round Trip</label>
+                    <label><input type="radio" name="destination" value="mountains"> One Way</label>
+                    <label><input type="radio" name="destination" value="city"> Multi-City</label>
+                </div>
+                <div class="small-boxes">
+                    <div class="small-box">
+                        <p>From</p>
+                        <p style="font-size: 14px; margin-bottom: 1px;">Paris</p>
+                        <p>CDG</p>
+                    </div>
+                    <div class="small-box">
+                        <p>To</p>
+                        <p style="font-size: 14px; margin-bottom: 1px;">New York</p>
+                        <p>JFK</p>
+                    </div>
+                    <div class="small-box">
+                        <p>Departure</p>
+                        <p style="font-size: 14px; margin-bottom: 1px;">2024-07-16</p>
+                        <p>08:00 AM</p>
+                    </div>
+                    <div class="small-box">
+                        <p>Travellers</p>
+                        <p style="font-size: 14px; margin-bottom: 1px;">2 Adults</p>
+                        <p>1 Child</p>
+                    </div>
+                </div>
+                <div class="additional-button">
+                    <button class="button">Book Now</button>
+                </div>
+            </div>
+        </div>
+        <button class="button">Check-In/Schedule</button>
+        <button class="button">Flight Status</button>
+    </div>
+</header>
+
+<!-- Four boxes section -->
+<div class="four-boxes">
+    <div class="box">
+        <img src="123381.jpg" alt="Box Image 1">
+        <div class="box-text">
+            <p> Spectacular Skyscrappers of NYC!</p>
+        </div>
+    </div>
+    <div class="box">
+        <img src="2410578.jpg" alt="Box Image 2">
+        <div class="box-text">
+            <p> European Delight and Crossaints! </p>
+        </div>
+    </div>
+    <div class="box">
+        <img src="great-wall-of-china-jinshanling-sunrise-5k-1080x2160-16.jpg" alt="Box Image 3">
+        <div class="box-text">
+            <p> View from the Moon! </p>
+        </div>
+    </div>
+    <div class="box">
+        <img src="1318549.jpg" alt="Box Image 4">
+        <div class="box-text">
+            <p> Salute!</p>
+        </div>
+    </div>
+</div>
+
+<!-- Text div below four boxes -->
+<div class="text-div">
+    <p>_________ Discover the world with Bon Voyage! _________ </p>
+</div>
+
+<!-- Orange banner at the end of the page -->
+<div class="orange-banner">
+    <p>Ready to embark on your next adventure?</p>
+    <button class="button">Book Now</button>
+</div>
+
+</body>
+</html>
